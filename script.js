@@ -11,7 +11,7 @@ const form = document.addEventListener('DOMContentLoaded', ()=>{
         const taskText = taskInput.value.trim();
 
         // Check if the input is empty
-        if (taskText === " "){
+        if (taskText === ""){
             alert("Please enter a task");
             return;
         }
@@ -35,7 +35,7 @@ const form = document.addEventListener('DOMContentLoaded', ()=>{
         taskList.appendChild(listItem);
 
         // Clear the input field
-        taskInput.value = " ";
+        taskInput.value = "";
     }
 
     // Attach the click event listener to the "Add Task" button
