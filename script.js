@@ -23,7 +23,7 @@ const form = document.addEventListener('DOMContentLoaded', ()=>{
         // Create a "Remove" button for each task
         const removeButton = document.createElement('Button');
         removeButton.textContent = 'Remove';
-        removeButton.className = 'remove-btn';
+        removeButton.classList.add('remove-btn');
 
         // Add the "Remove" functionality to the button
         removeButton.onclick = function(){
