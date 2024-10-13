@@ -4,6 +4,18 @@ const form = document.addEventListener('DOMContentLoaded', ()=>{
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
 
+    function loadTasksFromLocalStorage(){
+        const storedTask = localStorage.getItem('tasks');
+
+        if (storedTask){
+            const taskArray = JSON.parse(storedTask);
+            
+            taskArray.forEach(taskText => {
+                createTaskElement(taskText);
+            });
+        }
+    }
+
     // Define the function to add tasks
     function addTask(){
 
@@ -16,6 +28,17 @@ const form = document.addEventListener('DOMContentLoaded', ()=>{
             return;
         }
 
+        // Add the new task to the list
+        createTaskElement(taskText);
+
+        // Save the task to local storage
+        saveTaskToLocalStorage(taskText);
+
+        // Clear the input field
+        taskInput.value = "";
+    }
+
+    function createTaskElement(taskText){
         // Create a new <li> element for the task
         const listItem = document.createElement('li');
         listItem.textContent = taskText;
@@ -28,15 +51,30 @@ const form = document.addEventListener('DOMContentLoaded', ()=>{
         // Add the "Remove" functionality to the button
         removeButton.onclick = function(){
             taskList.removeChild(listItem);
+            removeTaskFromLocalStorage(taskText);
         }
 
         // Append the remove button to the task item and the task item to the list
         listItem.appendChild(removeButton);
         taskList.appendChild(listItem);
-
-        // Clear the input field
-        taskInput.value = "";
     }
+
+
+    function saveTaskToLocalStorage(taskText){
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.push(taskText);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Function to remove task from local storage
+    function removeTaskFromLocalStorage(){
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks = tasks.filter(task => task !== taskText);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Load tasks from local storage when the DOM is fully loaded
+    loadTasksFromLocalStorage();
 
     // Attach the click event listener to the "Add Task" button
     addButton.addEventListener('click', addTask);
